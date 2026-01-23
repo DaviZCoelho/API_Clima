@@ -1,0 +1,15 @@
+# ============================================
+# Dependências do Backend - API de Clima
+# ============================================
+
+# Framework web assíncrono de alta performance
+fastapi>=0.109.0
+
+# Servidor ASGI para rodar a aplicação
+uvicorn[standard]>=0.27.0
+
+# Cliente HTTP para consumir APIs externas
+requests>=2.31.0
+
+# Validação de dados (dependência do FastAPI)
+pydantic>=2.5.3

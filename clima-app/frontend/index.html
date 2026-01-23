@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Aplicação de consulta de clima em tempo real">
+    <title>Consulta de Clima</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <h1>Consulta de Clima</h1>
+            <p class="subtitle">Descubra o clima em qualquer cidade do mundo</p>
+        </header>
+
+        <section class="search-section">
+            <div class="search-box">
+                <div class="input-wrapper">
+                    <svg class="input-icon" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/>
+                        <circle cx="12" cy="10" r="3"/>
+                    </svg>
+                    <input 
+                        type="text" 
+                        id="cidade-input" 
+                        class="cidade-input"
+                        placeholder="Digite o nome da cidade..."
+                        autocomplete="off"
+                        aria-label="Nome da cidade"
+                    >
+                    <ul id="sugestoes-lista" class="sugestoes-lista hidden"></ul>
+                </div>
+                <button 
+                    id="buscar-btn" 
+                    class="buscar-btn"
+                    aria-label="Buscar clima"
+                >
+                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <circle cx="11" cy="11" r="8"/>
+                        <path d="m21 21-4.3-4.3"/>
+                    </svg>
+                    Buscar
+                </button>
+            </div>
+        </section>
+
+        <div id="loading" class="loading hidden">
+            <div class="spinner"></div>
+            <p>Buscando dados do clima...</p>
+        </div>
+
+        <div id="erro-container" class="erro-container hidden">
+            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="12" cy="12" r="10"/>
+                <line x1="12" x2="12" y1="8" y2="12"/>
+                <line x1="12" x2="12.01" y1="16" y2="16"/>
+            </svg>
+            <p id="erro-mensagem" class="erro-mensagem"></p>
+        </div>
+
+        <section id="resultado-container" class="resultado-container hidden">
+            <div class="resultado-card">
+                <div class="cidade-header">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/>
+                        <circle cx="12" cy="10" r="3"/>
+                    </svg>
+                    <h2 id="cidade-nome" class="cidade-nome"></h2>
+                </div>
+                <div class="clima-grid">
+                    <div class="clima-item">
+                        <div class="clima-icon">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M14 4v10.54a4 4 0 1 1-4 0V4a2 2 0 0 1 4 0Z"/>
+                            </svg>
+                        </div>
+                        <span class="clima-label">Temperatura</span>
+                        <span id="temperatura" class="clima-valor"></span>
+                    </div>
+                    <div class="clima-item">
+                        <div class="clima-icon">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M12 12V2"/>
+                                <path d="m4.93 10.93 1.41 1.41"/>
+                                <path d="M2 18h2"/>
+                                <path d="M20 18h2"/>
+                                <path d="m19.07 10.93-1.41 1.41"/>
+                                <path d="M22 22H2"/>
+                                <path d="m16 6-4 4-4-4"/>
+                                <path d="M16 18a4 4 0 0 0-8 0"/>
+                            </svg>
+                        </div>
+                        <span class="clima-label">Sensação Térmica</span>
+                        <span id="sensacao-termica" class="clima-valor"></span>
+                    </div>
+                    <div class="clima-item">
+                        <div class="clima-icon">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M12 22a7 7 0 0 0 7-7c0-2-1-3.9-3-5.5s-3.5-4-4-6.5c-.5 2.5-2 4.9-4 6.5C6 11.1 5 13 5 15a7 7 0 0 0 7 7z"/>
+                            </svg>
+                        </div>
+                        <span class="clima-label">Umidade</span>
+                        <span id="umidade" class="clima-valor"></span>
+                    </div>
+                    <div class="clima-item">
+                        <div class="clima-icon">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M17.5 19H9a7 7 0 1 1 6.71-9h1.79a4.5 4.5 0 1 1 0 9Z"/>
+                            </svg>
+                        </div>
+                        <span class="clima-label">Condição</span>
+                        <span id="descricao-clima" class="clima-valor descricao"></span>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <footer class="footer">
+            <p>Dados fornecidos por <a href="https://openweathermap.org/" target="_blank" rel="noopener">OpenWeatherMap</a></p>
+        </footer>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
