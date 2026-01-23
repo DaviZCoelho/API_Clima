@@ -7,12 +7,6 @@ Projeto desenvolvido para consultar dados meteorológicos em tempo real, consumi
 - **HTML5 / CSS3 / JavaScript Vanilla**
 - **OpenWeatherMap API**
 
-## Diferenciais Aplicados
-- **Design Responsivo:** Interface SaaS profissional e minimalista.
-- **Detecção Automática de Ambiente:** Frontend detecta localhost ou produção automaticamente.
-- **Tratamento de Erros:** Mensagens amigáveis para cidade não encontrada, timeout e falhas de conexão.
-- **CORS Configurado:** Backend preparado para requisições cross-origin.
-
 ## Como Rodar
 
 ### Backend
