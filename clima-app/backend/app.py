@@ -18,7 +18,7 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-API_KEY = os.environ.get("API_KEY", "1e0d1c20a40a96c8e5cf1281c43506f2")
+API_KEY = os.environ.get("API_KEY", "Coloque sua key aqui")
 BASE_URL = "https://api.openweathermap.org/data/2.5/weather"
 
 def buscar_clima_openweather(cidade: str) -> dict:
